@@ -35,12 +35,7 @@ const TodoAppFooter = styled.div`
 
 const TodoFooter = (props) => {
 
-  let left = 0;
-  props.todos.forEach((item) => {
-    if(!item.check){
-      left+=1;
-    }
-  })
+  let left = props.todos.filter(item => !item.check).length;
 
   return (
     <TodoAppFooter>

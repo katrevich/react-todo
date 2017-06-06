@@ -39,25 +39,27 @@ class Todo extends Component {
     } else {
       this.state = JSON.parse(localStorage.getItem('state'));
     }
-
-    this.addTodo = this.addTodo.bind(this);
-    this.toggle = this.toggle.bind(this);
-    this.remove = this.remove.bind(this);
-    this.setFilter = this.setFilter.bind(this);
   }
 
-  addTodo(text){
-    this.setState(prevState => prevState.todos.push({
+
+  addTodo = (text) => {
+    let newTodo = {
       text,
       check: false
-    }));
+    };
+
+    this.setState(prevState => ({todos: prevState.todos.concat(newTodo)}));
   }
 
-  toggle(id) {
-    this.setState(prevState => prevState.todos[id].check = !prevState.todos[id].check);
+  toggle = (id) => {
+    this.setState(prevState => {
+      let state = prevState;
+      state.todos[id].check = !state.todos[id].check
+      return state;
+    });
   }
 
-  remove(id) {
+  remove = (id) => {
     this.setState(prevState => prevState.todos.splice(id, 1));
   }
 
@@ -72,7 +74,7 @@ class Todo extends Component {
     }
   }
 
-  setFilter(option) {
+  setFilter = (option) => {
     this.setState(prevState => prevState.filter = option);
   }
 
@@ -82,7 +84,7 @@ class Todo extends Component {
 
   render() {
 
-    let footer = (this.state.todos.length > 0) ? <TodoFooter setFilter={this.setFilter} todos={this.state.todos} filter={this.state.filter} /> : '';
+    let footer = (this.state.todos.length > 0) ? <TodoFooter setFilter={this.setFilter} todos={this.state.todos} filter={this.state.filter} /> : null;
 
     return (
       <TodoApp>
