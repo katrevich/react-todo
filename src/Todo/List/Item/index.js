@@ -12,6 +12,7 @@ const TodoAppListItem = styled.li`
     right: 0;
     top:0;
     font-size:20px;
+    font-weight: bold;
     cursor: pointer;
     color: red;
     opacity: 0;
@@ -55,14 +56,15 @@ const TodoAppListItem = styled.li`
   }
 `
 
-const TodoListItem = (props) => {
-  const { text, check } = props.todo;
+let TodoListItem = ({toggle, remove, id, todo}) => {
+  const { text, check } = todo;
   return (
     <TodoAppListItem check={check}>
-      <label><input type="checkbox" checked={check} onChange={() => {props.toggle(props.id)}}/><span></span>{text}</label>
-      <a className="remove" onClick={(e) => {e.preventDefault();props.remove(props.id);}}>x</a>
+      <label><input type="checkbox" checked={check} onChange={() => toggle()}/><span></span>{text}</label>
+      <span className="remove" onClick={() => remove()}>x</span>
     </TodoAppListItem>
   )
 }
+
 
 export default TodoListItem;

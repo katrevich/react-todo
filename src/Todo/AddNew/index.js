@@ -1,5 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
+import { addTodo } from '../../actions/index';
 
 const AddForm = styled.div`
   box-shadow: 2px 2px 15px 1px rgba(0,0,0, .2);
@@ -22,33 +24,32 @@ const AddForm = styled.div`
   }
 `
 
-class TodoAddnew extends Component {
-
-  constructor(props) {
-    super(props);
-
-    this.submitHandler = this.submitHandler.bind(this);
-  }
-
-  submitHandler(e) {
-    e.preventDefault();
-    if(this.textInput.value){
-      this.props.addTodo(this.textInput.value);
-    }
-    this.textInput.value = '';
-  }
-
-  render() {
+let TodoAddNew = ({onSubmit}) => {
     return (
       <AddForm>
-        <form action="" onSubmit={ this.submitHandler }>
-          <input type="text" ref={(input) => { this.textInput = input }} />
+        <form action="" onSubmit={ (e) => {
+            e.preventDefault();
+            let text = e.target.elements.namedItem('text');
+            onSubmit(text.value)
+            text.value = '';
+          } }>
+          <input type="text" id="text"  />
           <button type="submit">Add</button>
         </form>
       </AddForm>
     )
-  }
 }
 
+const mapDispatchToProps = (dispatch) => ({
+  onSubmit: (text) => {
+    if(text.trim()){
+      dispatch(addTodo(text));
+    }
+  }
+})
 
-export default TodoAddnew;
+
+TodoAddNew = connect(null, mapDispatchToProps)(TodoAddNew);
+
+
+export default TodoAddNew;
