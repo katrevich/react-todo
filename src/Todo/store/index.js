@@ -19,15 +19,12 @@ appState.addTodo = action(text => {
 })
 
 appState.toggle = action(id => {
-  appState.todos.map(item => {
-    if(item.id === id){
-      item.check = !item.check;
-    }
-  })
+  let item = appState.todos.find(item => item.id === id);
+  item.check = !item.check;
 })
 
 appState.remove = action(id => {
-  appState.todos.splice(appState.todos.findIndex(item => item.id === id), 1);
+  appState.todos = appState.todos.filter(item => item.id !== id);
 })
 
 appState.setFilter = action(filter => {

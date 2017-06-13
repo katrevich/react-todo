@@ -1,7 +1,5 @@
 import React from 'react';
-import { autorun } from 'mobx';
 import { injectGlobal } from 'styled-components';
-import { observer } from 'mobx-react';
 
 import Todo from './Todo';
 import appState from './Todo/store/index';
@@ -13,10 +11,10 @@ injectGlobal`
   }
 `
 
-const App = observer(() => {
+const App = () => {
     return (
       <Todo appState={appState} />
     );
-})
+}
 
 export default App;

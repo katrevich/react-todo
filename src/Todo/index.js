@@ -33,31 +33,15 @@ const Todo = observer(class Todo extends Component {
     })
   }
 
-  addTodo = (text) => {
-    this.props.appState.addTodo(text)
-  }
-
-  toggle = (id) => {
-    this.props.appState.toggle(id)
-  }
-
-  remove = (id) => {
-    this.props.appState.remove(id)
-  }
-
-  setFilter = (filter) => {
-    this.props.appState.setFilter(filter);
-  }
-
   render(){
 
-    let footer = (this.props.appState.todos.length > 0) ? <TodoFooter todos={this.props.appState.todos} filter={this.props.appState.filter} setFilter={this.setFilter} /> : null;
+    let footer = (this.props.appState.todos.length > 0) ? <TodoFooter todos={this.props.appState.todos} filter={this.props.appState.filter} setFilter={this.props.appState.setFilter} /> : null;
 
     return (
       <TodoApp>
         <h1>Todo</h1>
-        <TodoAddNew onSubmit={this.addTodo} />
-        <TodoList todos={this.visibleTodos} toggle={this.toggle} remove={this.remove} />
+        <TodoAddNew onSubmit={this.props.appState.addTodo} />
+        <TodoList todos={this.visibleTodos} toggle={this.props.appState.toggle} remove={this.props.appState.remove} />
         {footer}
       </TodoApp>
     )
