@@ -1,7 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { connect } from 'react-redux';
-import { addTodo } from '../../actions/index';
 
 const AddForm = styled.div`
   box-shadow: 2px 2px 15px 1px rgba(0,0,0, .2);
@@ -30,7 +28,7 @@ let TodoAddNew = ({onSubmit}) => {
         <form action="" onSubmit={ (e) => {
             e.preventDefault();
             let text = e.target.elements.namedItem('text');
-            onSubmit(text.value)
+            onSubmit(text.value);
             text.value = '';
           } }>
           <input type="text" id="text"  />
@@ -40,16 +38,6 @@ let TodoAddNew = ({onSubmit}) => {
     )
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  onSubmit: (text) => {
-    if(text.trim()){
-      dispatch(addTodo(text));
-    }
-  }
-})
-
-
-TodoAddNew = connect(null, mapDispatchToProps)(TodoAddNew);
 
 
 export default TodoAddNew;

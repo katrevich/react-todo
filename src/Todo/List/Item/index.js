@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { observer } from 'mobx-react';
 
 const TodoAppListItem = styled.li`
   text-align: left;
@@ -56,7 +57,7 @@ const TodoAppListItem = styled.li`
   }
 `
 
-let TodoListItem = ({toggle, remove, id, todo}) => {
+let TodoListItem = observer(({toggle, remove, id, todo}) => {
   const { text, check } = todo;
   return (
     <TodoAppListItem check={check}>
@@ -64,7 +65,7 @@ let TodoListItem = ({toggle, remove, id, todo}) => {
       <span className="remove" onClick={() => remove()}>x</span>
     </TodoAppListItem>
   )
-}
+})
 
 
 export default TodoListItem;

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { connect } from 'react-redux';
-import { setFilter } from '../../actions/index';
+import { SHOW_ALL, SHOW_ACTIVE, SHOW_DISABLED } from '../store/index';
+import { observer } from 'mobx-react';
 
 const TodoAppFooter = styled.div`
   border-top: 1px solid #ddd;
@@ -35,7 +35,7 @@ const TodoAppFooter = styled.div`
   }
 `
 
-let TodoFooter = ({setFilter, todos, filter}) => {
+let TodoFooter = observer(({setFilter, todos, filter}) => {
 
   let left = todos.filter(item => !item.check).length;
 
@@ -43,24 +43,11 @@ let TodoFooter = ({setFilter, todos, filter}) => {
     <TodoAppFooter>
       <div className="info">{left} left</div>
 
-      <label><input  type="radio" onChange={() => setFilter('SHOW_ALL')} name="filter" checked={filter === 'SHOW_ALL'} value="SHOW_ALL"/><span>all</span></label>
-      <label><input  type="radio" onChange={() => setFilter('SHOW_ACTIVE')} name="filter" checked={filter === 'SHOW_ACTIVE'} value="SHOW_ACTIVE"/><span>active</span></label>
-      <label><input  type="radio" onChange={() => setFilter('SHOW_DISABLED')} name="filter" checked={filter === 'SHOW_DISABLED'} value="SHOW_DISABLED"/><span>done</span></label>
+      <label><input  type="radio" onChange={() => setFilter(SHOW_ALL)} name="filter" checked={filter === SHOW_ALL} value="SHOW_ALL"/><span>all</span></label>
+      <label><input  type="radio" onChange={() => setFilter(SHOW_ACTIVE)} name="filter" checked={filter === SHOW_ACTIVE} value="SHOW_ACTIVE"/><span>active</span></label>
+      <label><input  type="radio" onChange={() => setFilter(SHOW_DISABLED)} name="filter" checked={filter === SHOW_DISABLED} value="SHOW_DISABLED"/><span>done</span></label>
     </TodoAppFooter>
   )
-}
-
-const mapStateToProps = (state) => ({
-  todos: state.todos,
-  filter: state.filter
 })
-
-const mapDispatchToProps = (dispatch) => ({
-  setFilter: (filter) => {
-    dispatch(setFilter(filter))
-  }
-})
-
-TodoFooter = connect(mapStateToProps, mapDispatchToProps)(TodoFooter);
 
 export default TodoFooter;

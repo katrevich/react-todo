@@ -1,18 +1,10 @@
-import React, { Component } from 'react';
-import Todo from './Todo';
+import React from 'react';
+import { autorun } from 'mobx';
 import { injectGlobal } from 'styled-components';
-import { Provider } from 'react-redux';
-import { createStore, compose } from 'redux';
-import { todoApp } from './reducers/index';
-import persistState from 'redux-localstorage';
+import { observer } from 'mobx-react';
 
-const enhancer = compose(
-  persistState()
-)
-
-const initialState = localStorage.getItem('redux') ? JSON.parse(localStorage.getItem('redux')) : {};
-
-const store = createStore(todoApp, initialState, enhancer);
+import Todo from './Todo';
+import appState from './Todo/store/index';
 
 injectGlobal`
   body{
@@ -21,15 +13,10 @@ injectGlobal`
   }
 `
 
-class App extends Component {
-
-  render() {
+const App = observer(() => {
     return (
-      <Provider store={store}>
-        <Todo />
-      </Provider>
+      <Todo appState={appState} />
     );
-  }
-}
+})
 
 export default App;
